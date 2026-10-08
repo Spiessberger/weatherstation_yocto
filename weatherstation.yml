@@ -1,0 +1,66 @@
+header:
+  version: 14
+
+machine: raspberrypi5
+distro: poky
+target: weatherstation-image
+
+defaults:
+  repos:
+    branch: wrynose
+
+repos:
+  # This repository (provides meta-weatherstation)
+  weatherstation:
+    layers:
+      meta-weatherstation:
+
+  bitbake:
+    url: https://git.openembedded.org/bitbake
+    branch: "2.18"
+    path: layers/bitbake
+    layers:
+      .: disabled
+
+  openembedded-core:
+    url: https://git.openembedded.org/openembedded-core
+    path: layers/openembedded-core
+    layers:
+      meta:
+
+  meta-yocto:
+    url: https://git.yoctoproject.org/meta-yocto
+    path: layers/meta-yocto
+    layers:
+      meta-poky:
+
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    path: layers/meta-openembedded
+    layers:
+      meta-oe:
+      meta-python:
+      meta-networking:
+
+  meta-raspberrypi:
+    url: https://github.com/agherzan/meta-raspberrypi
+    path: layers/meta-raspberrypi
+
+local_conf_header:
+  base: |
+    INIT_MANAGER = "systemd"
+    IMAGE_FSTYPES = "wic.bz2 wic.bmap"
+    INHERIT += "rm_work"
+
+  network: |
+    # NetworkManager owns networking; keep systemd-networkd out of the way
+    PACKAGECONFIG:remove:pn-systemd = "networkd"
+    PACKAGECONFIG:remove:pn-systemd-conf = "dhcp-ethernet"
+    # Broadcom WiFi/BT firmware (linux-firmware-rpidistro), see meta-raspberrypi docs/ipcompliance.md
+    LICENSE_FLAGS_ACCEPTED += "synaptics-killswitch"
+
+  rpi: |
+    hostname:pn-base-files = "weatherstation"
+    # Waveshare 10.1" DSI panel
+    RPI_KERNEL_DEVICETREE_OVERLAYS:append = " overlays/vc4-kms-dsi-waveshare-panel.dtbo"
+    RPI_EXTRA_CONFIG = "\ndtoverlay=vc4-kms-dsi-waveshare-panel,10_1_inch\n"
