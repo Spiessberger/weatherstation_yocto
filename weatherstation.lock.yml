@@ -12,3 +12,5 @@ overrides:
       commit: 47d7dbdd10890bbd429bc0cccbe14435c37e5af1
     meta-raspberrypi:
       commit: f62c67921474370829d24a4fa01ef88543f3906b
+    meta-qt6:
+      commit: 2925ea875d9a71c58fd3f5b8437164d6f3fee359

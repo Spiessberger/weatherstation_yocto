@@ -14,5 +14,9 @@ IMAGE_INSTALL += " \
     networkmanager \
     networkmanager-nmcli \
     networkmanager-wifi \
+    qtbase \
+    qtdeclarative \
+    qtdeclarative-tools \
+    qt-eglfs-config \
+    ttf-roboto \
 "
-
