@@ -22,6 +22,20 @@ sudo bmaptool copy weatherstation-image-raspberrypi5.rootfs.wic.bz2 /dev/sdX
 
 The board comes up as `weatherstation`. Log in as `root` over SSH with no password (development image).
 
+## SDK
+
+Cross-compile Qt apps on the desktop with the image's SDK (Qt 6 libraries for the target, `moc`/`qmlcachegen`/etc. for the host):
+
+```sh
+kas-container shell weatherstation.yml:weatherstation.lock.yml -c "bitbake -c populate_sdk weatherstation-image"
+./build/tmp/deploy/sdk/poky-glibc-x86_64-weatherstation-image-*-toolchain-*.sh
+. /opt/poky/<version>/environment-setup-cortexa76-poky-linux
+cmake -B build -G Ninja && cmake --build build
+```
+
+Sourcing the environment sets `CMAKE_TOOLCHAIN_FILE`. Without sourcing (e.g. in an IDE), pass
+`-DCMAKE_TOOLCHAIN_FILE=<sdk>/sysroots/x86_64-pokysdk-linux/usr/share/cmake/Qt6Toolchain.cmake` instead.
+
 ## Qt
 
 - X11 is removed from `DISTRO_FEATURES` and Qt's default platform is `eglfs` (KMS/GBM, Mesa V3D).
