@@ -33,6 +33,20 @@ The board comes up as `weatherstation`. Log in as `root` over SSH with no passwo
 - Roboto is the only installed font.
 - To try a QML file on the device, run `qml file.qml`.
 
+## Demo app
+
+```sh
+qtquick-demo
+```
+
+- Top bar: fps, worst frame time in the last second, touch events per second, and the number of animated items.
+  `−`/`+` change the load.
+- Left side: touch it. A ring follows each finger and every touch event leaves a fading dot.
+  Dot spacing shows the touch sample rate, and the gap to the finger shows the lag.
+- Right side: a long list for checking flick and scroll smoothness.
+
+Stop it with Ctrl+C.
+
 ## Layout
 
 ```
@@ -43,4 +57,5 @@ meta-weatherstation/
   recipes-qt/qt-eglfs-config eglfs KMS device config
   recipes-graphics/cage-kiosk cage at boot, rotation, touch/input udev rules
   recipes-graphics/xdg-runtime-dir XDG_RUNTIME_DIR for login shells
+  recipes-qt/qtquick-demo    performance/touch demo (QML)
 ```

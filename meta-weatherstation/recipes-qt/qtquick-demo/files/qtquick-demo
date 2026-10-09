@@ -1,0 +1,4 @@
+#!/bin/sh
+# Non-login shells (e.g. "ssh host qtquick-demo") don't read profile.d
+. /etc/profile.d/qt-eglfs.sh
+exec qml /usr/share/qtquick-demo/main.qml "$@"

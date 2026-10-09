@@ -24,4 +24,5 @@ IMAGE_INSTALL += " \
     qtwayland \
     xdg-runtime-dir \
     cage-kiosk \
+    qtquick-demo \
 "
