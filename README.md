@@ -35,7 +35,11 @@ The board comes up as `weatherstation`. Log in as `root` over SSH with no passwo
 
 ## Demo app
 
+`qtquick-demo.service` starts it at boot under cage (`cage.service`). To run it by hand on eglfs instead,
+stop both services first:
+
 ```sh
+systemctl stop qtquick-demo cage
 qtquick-demo
 ```
 

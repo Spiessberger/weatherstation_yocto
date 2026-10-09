@@ -1,0 +1,11 @@
+[Unit]
+Description=Qt Quick demo
+Requires=cage.service
+After=cage.service
+
+[Service]
+ExecStart=/usr/bin/qml /usr/share/qtquick-demo/main.qml
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
