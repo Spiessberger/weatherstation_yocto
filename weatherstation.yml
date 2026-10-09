@@ -51,6 +51,10 @@ repos:
     branch: "6.12"
     path: layers/meta-qt6
 
+  meta-wayland:
+    url: https://codeberg.org/flk/meta-wayland
+    path: layers/meta-wayland
+
 local_conf_header:
   base: |
     INIT_MANAGER = "systemd"
@@ -71,5 +75,6 @@ local_conf_header:
     RPI_EXTRA_CONFIG = "\ndtoverlay=vc4-kms-dsi-waveshare-panel,10_1_inch\n"
 
   qt: |
-    # Qt apps run fullscreen on eglfs (KMS/GBM); no X11/Wayland stack
-    DISTRO_FEATURES:remove = "x11 wayland"
+    # Qt apps default to eglfs (KMS/GBM); wayland is only for testing under cage
+    DISTRO_FEATURES:remove = "x11"
+    QT_QPA_DEFAULT_PLATFORM:pn-qtbase = "eglfs"

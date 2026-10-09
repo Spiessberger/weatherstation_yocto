@@ -1,0 +1,16 @@
+[Unit]
+Description=Cage Wayland kiosk compositor
+
+[Service]
+Environment=XDG_RUNTIME_DIR=/run WLR_DRM_DEVICES=/dev/dri/by-path/platform-1f00130000.dsi-card
+# Otherwise wlroots sees the global WAYLAND_DISPLAY and tries to run nested
+UnsetEnvironment=WAYLAND_DISPLAY
+# Placeholder client keeps cage alive; real apps connect as separate services
+ExecStart=/usr/bin/cage -d -- sleep infinity
+# Let units ordered After=cage.service start only once the socket exists
+ExecStartPost=/bin/sh -c "while [ ! -S /run/wayland-0 ]; do sleep 0.1; done"
+ExecStartPost=/usr/bin/env WAYLAND_DISPLAY=/run/wayland-0 /usr/bin/wlr-randr --output DSI-2 --transform 180
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

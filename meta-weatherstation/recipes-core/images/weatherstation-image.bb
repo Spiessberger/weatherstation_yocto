@@ -19,4 +19,9 @@ IMAGE_INSTALL += " \
     qtdeclarative-tools \
     qt-eglfs-config \
     ttf-roboto \
+    cage \
+    wlr-randr \
+    qtwayland \
+    xdg-runtime-dir \
+    cage-kiosk \
 "

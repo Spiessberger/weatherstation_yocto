@@ -1,0 +1,2 @@
+# Rotates touch 180 degrees to match the compositor output transform (wlroots does not apply output transforms to unmapped touch)
+ACTION=="add|change", SUBSYSTEM=="input", KERNEL=="event*", ATTRS{name}=="Goodix Capacitive TouchScreen", ENV{LIBINPUT_CALIBRATION_MATRIX}="-1 0 1 0 -1 1"

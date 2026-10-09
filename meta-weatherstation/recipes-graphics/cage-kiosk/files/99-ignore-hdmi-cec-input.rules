@@ -1,0 +1,2 @@
+# HDMI CEC remote inputs report pointer capability, which makes the compositor show a cursor
+ACTION=="add|change", SUBSYSTEM=="input", KERNEL=="event*", ATTRS{name}=="vc4-hdmi-[0-9]", ENV{LIBINPUT_IGNORE_DEVICE}="1"

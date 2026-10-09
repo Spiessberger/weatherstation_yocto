@@ -24,7 +24,9 @@ The board comes up as `weatherstation`. Log in as `root` over SSH with no passwo
 
 ## Qt
 
-- X11 and Wayland are removed from `DISTRO_FEATURES`, so every Qt app defaults to the `eglfs` platform (KMS/GBM, Mesa V3D).
+- X11 is removed from `DISTRO_FEATURES` and Qt's default platform is `eglfs` (KMS/GBM, Mesa V3D).
+- `cage.service` starts the cage Wayland kiosk at boot on the DSI panel, rotated 180° (the panel is mounted upside down).
+  `WAYLAND_DISPLAY=/run/wayland-0` is set for all services, so Qt apps started as services ordered `After=cage.service` use Wayland.
 - The Pi 5 has three DRM cards. `/etc/qt-eglfs-kms.json` selects the RP1 DSI card (the panel), and
   `/etc/profile.d/qt-eglfs.sh` exports `QT_QPA_EGLFS_KMS_CONFIG` for login shells.
   Apps started from systemd or a non-login shell must set that variable themselves.
@@ -39,4 +41,6 @@ weatherstation.lock.yml      pinned layer commits
 meta-weatherstation/
   recipes-core/images/       weatherstation-image
   recipes-qt/qt-eglfs-config eglfs KMS device config
+  recipes-graphics/cage-kiosk cage at boot, rotation, touch/input udev rules
+  recipes-graphics/xdg-runtime-dir XDG_RUNTIME_DIR for login shells
 ```
